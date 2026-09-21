@@ -12,9 +12,9 @@ int main(void) {
     srand((unsigned int)time(NULL));
 
     // 쓰기(write) 모드로 파일 열기 (안만들어 놨는데 뭐지)
-    FILE *file = fopen("graph.txt", "w");
+    FILE *file = fopen("data/edge.txt", "w");
     if (file == NULL) {
-        printf("파일 생성 실패 (graph.txt)\n");
+        printf("파일 생성 실패 (edge.txt)\n");
         return 1;
     }
 
