@@ -47,7 +47,15 @@ int IsConnected(Graph* graph, int user1, int user2){
 }
 
 void AddEdge(Graph* graph, int user1, int user2){
+    ListNode* newNode1 = (ListNode*)malloc(sizeof(ListNode)); // 유저1 정점 동적할당
+    newNode1->userID = user1;  // user1의 ID = user1(매개변수)(파일 읽어온거에서 첫번째)
+    newNode1->next = graph->list[user2];  // user1이 가리키는 포인터 = user2의 주소
+    graph->list[user2] = newNode1;  // 정확히 뭔뜻인지 잘 모르겠음 
 
+    ListNode* newNode2 = (ListNode*)malloc(sizeof(ListNode)); // 유저2 정점 동적할당
+    newNode2->userID = user2;
+    newNode2->next = graph->list[user1];
+    graph->list[user1] = newNode2; 
 }
 
 void FreeGraph(Graph* graph){
