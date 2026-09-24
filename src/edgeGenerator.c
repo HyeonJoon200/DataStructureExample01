@@ -18,7 +18,10 @@ int main(void) {
         printf("파일 생성 실패 (edge.txt)\n");
         return 1;
     }
-
+    Graph* graph = CreateGraph(NODE);
+    if (graph == NULL){ // 실패시 처리
+        return 1;
+    }
     printf("데이터 생성 시작 (NODE: %d, EDGE: %d)\n", NODE, EDGE);
 
     int count = 0;
