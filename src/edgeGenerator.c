@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "graph.h"
 
 #define NODE 100000
 #define EDGE 500000
@@ -29,7 +30,12 @@ int main(void) {
         if(user1 == user2) {
             continue;
         }
-
+        // 이미 존재하는 간선이면 버리기
+        if (IsConnected(graph, user1, user2)){ // 1이면 중복간선, 0이면 중복 아님
+            continue;
+        }
+        // 중복 간선 아니면 그래프에 추가
+        AddEdge(graph, user1, user2);
         // 저장 (안하면 ㅈ됨)
         fprintf(file, "%d %d\n", user1, user2);
         count++;
@@ -51,3 +57,7 @@ int main(void) {
     
     return 0;
 }
+// 나중에 컴파일 할때 graph.c랑 같이 돌려야 작동함 
+// gcc -O2 src/edgeGenerator.c src/graph.c -Iinclude -o compile/edgeGenerator
+// 모든 컴파일 및 명령어는 ~/DataStructureProject에서 돌리는거로 가정하고 작성함
+// 실행파일만 돌려보실거 같긴 한데 아니면 ㅈ되니까 제출전 참고
