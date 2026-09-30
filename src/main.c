@@ -40,7 +40,8 @@ int main(){
             current = current->next;
         }
         printf("\n");
-    }
+    } // (9/29)
+    
 
 
     FreeGraph(graph);
