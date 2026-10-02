@@ -2,9 +2,13 @@
 #include<stdlib.h>
 #include<time.h>
 
+#define MIN_NODE 100000
+#define MIN_EDGE 500000
+#define MIN_HASHTAG 50000
+#define MIN_PROFILE 50000
+#define MIN_POST 200000
 // 해당 프로그램 역할 : 교수님께서 데이터 셋 변경해서 테스트 하신다고 하셔서 그거 대비용으로 
 //                    데이터 셋 생성기들에 데이터 량을 입력받고 요구조건 이하 혹은 초과 시의 예외처리 수행
-
 int main(){
     // 데이터 생성기들이 읽을 데이터량을 넣어둘 파일 생성
     FILE* file = fopen("data/dataManager.txt", "w");
