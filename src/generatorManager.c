@@ -1,8 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-#define MIN_NODE 100000LL
-#define MAX_NODE 100000000LL
+#define MIN_USER 100000LL
+#define MAX_USER 100000000LL
 #define MIN_EDGE 500000LL
 #define MIN_HASHTAG 50000LL
 #define MIN_POST 200000LL
@@ -69,7 +69,7 @@ int main(){
     printf("================================================\n");
 
     // user 수
-    user = InputData("사용자 수 입력 (100,000 ~ 100,000,000) : ", MIN_NODE, MAX_NODE);
+    user = InputData("사용자 수 입력 (100,000 ~ 100,000,000) : ", MIN_USER, MAX_USER);
 
     // edge 수 : 무방향 그래프에서 중복 제거한 최대 = user*(user-1)/2
     maxEdge = user*(user-1)/2;
@@ -104,8 +104,9 @@ int main(){
     }
 
     fprintf(file, "DATA_STRUCTURE_PROJECT_CONFIG\n"); // 파일 식별용 문자열
-    fprintf(file, "%lld\n%lld\n%lld\n%lld\n%lld\n", user, edge, hashTag, post, check);
+    fprintf(file, "USER=%lld\nEDGE=%lld\nHASHTAG=%lld\nPOST=%lld\nCHECK=%lld\n", user, edge, hashTag, post, check);
 
     fclose(file);
+
     return 0;
 }
