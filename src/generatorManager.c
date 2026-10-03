@@ -14,7 +14,7 @@
 // 입력 버퍼 지우기 (잘못된 입력시의 예외처리용)
 void ClearBuffer(){
     int index;
-    while((ch=getchar()) != '\n' && ch != EOF){
+    while((index = getchar()) != '\n' && index != EOF){
         // 남아 있는 입력 날리기
     }
 }
@@ -91,7 +91,7 @@ int main(){
     printf("               입력된 데이터셋 규모               \n"); 
     printf("================================================\n");
 
-    printf("USER : %lld\n", node);
+    printf("USER : %lld\n", user);
     printf("EDGE : %lld\n", edge);
     printf("HASHTAG : %lld\n", hashTag);
     printf("POST : %lld\n", post);
