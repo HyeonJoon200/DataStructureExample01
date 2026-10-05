@@ -1,32 +1,63 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
-#define NODE 100000
+#define CONFIG_FILE "data/generatorConfig.txt"
+#define USER_FILE "data/users.txt"
 
 int main(void) {
     // 코드 실행 시간 측정용 
     clock_t start = clock();
 
-    srand((unsigned int)time(NULL));
+    long long user;
+    FILE* configFile = fopen(CONFIG_FILE, "r");
 
-    // 쓰기(write) 모드로 파일 열기 (안만들어 놨는데 뭐지)
-    FILE *file = fopen("data/user.txt", "w");
-    if (file == NULL) {
-        printf("파일 생성 실패 (user.txt)\n");
+    if (configFile == NULL){
+        printf("설정 파일 열기 실패 (%s)\n", CONFIG_FILE);
         return 1;
     }
 
-    printf("데이터 생성 시작 (NODE: %d)\n", NODE);
-    int count;
-    for(count=1; count<=NODE; count++){
-        fprintf(file, "%d User%d\n", count, count);
-        if(count==NODE)
-            fprintf(file, "%d명 유저 생성\n", count);
+    // 파일 식별용 문자열 
+    char header[100];
+    if(fgets(header, sizeof(header), configFile) == NULL){
+        printf("설정 파일 읽기 실패\n");
+        fclose(configFile);
+        return 1;
     }
 
-    fclose(file);
-    printf("데이터 생성 완료 (NODE: %d)\n", count-1);
+    // 식별용 문자열이 맞는지 확인
+    if(strcmp(header, "DATA_STRUCTURE_PROJECT_CONFIG\n") != 0){
+        printf("올바른 설정 파일이 아닙니다.(식별용 문자열이 다릅니다.)\n");
+        fclose(configFile);
+        return 1;
+    }
+
+    // USER 값 읽어 오기
+    if (fscanf(configFile, "USER=%lld\n", &user) != 1){
+        printf("USER 데이터 읽기 실패\n");
+        fclose(configFile);
+        return 1;
+    }
+
+    // 파일 닫기
+    fclose(configFile);
+
+    printf("생성할 사용자 수 : %lld\n", user);
+    FILE* userFile = fopen(USER_FILE, "w");
+
+    if(userFile == NULL){
+        printf("사용자 파일 생성 실패 (%s)\n", USER_FILE);
+        return 1;
+    }
+
+    // 실질적인 유저 ID 및 유저명 생성 
+    for(long long i = 1; i<=user; i++){
+        fprintf(userFile, "%lld User%lld\n", i, i);
+    }
+    fclose(userFile);
+
+    printf("사용자 수 : %lld\n", user);
 
     // 코드 종료 시간 측정
     clock_t end = clock();
