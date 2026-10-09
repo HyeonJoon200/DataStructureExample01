@@ -29,7 +29,7 @@ long long InputData(const char* message, long long min, long long max){
         printf("%s", message); 
         // 문자 입력시
         if(scanf("%lld", &value) != 1){
-            printf("잘못된 입력입니다. 정수로만 입력해주세요.\n");
+            printf("Invaild input. Please enter an integer.\n");
             // 버퍼 삭제
             ClearBuffer();
             continue;
@@ -38,13 +38,13 @@ long long InputData(const char* message, long long min, long long max){
         
         // 최소값 미만으로 입력시
         if(value < min){
-            printf("잘못된 입력입니다. 최소값은 %lld입니다.\n", min);
+            printf("Invaild input. Minimum value is %lld.\n", min);
             continue;
         }
         
         // 최대값 초과로 입력시
         if(max != -1 && value > max){
-            printf("잘못된 입력입니다. 최대값은 %lld입니다.\n", max);
+            printf("Invaild input. Maximum value is %lld.\n", max);
             continue;
         }
 
@@ -65,30 +65,30 @@ int main(){
     long long maxEdge;
 
     printf("================================================\n");
-    printf("            데이터 규모 설정 프로그램             \n"); // 오.. 거의 딱 맞춤
+    printf("             DATASET CONFIGURATION              \n"); // 오.. 거의 딱 맞춤
     printf("================================================\n");
 
     // user 수
-    user = InputData("사용자 수 입력 (100,000 ~ 100,000,000) : ", MIN_USER, MAX_USER);
+    user = InputData("Enter user count (100,000 ~ 100,000,000) : ", MIN_USER, MAX_USER);
 
     // edge 수 : 무방향 그래프에서 중복 제거한 최대 = user*(user-1)/2
     maxEdge = user*(user-1)/2;
     char message[100];
     // 문자열 안에 간선 최대치 삽입
-    snprintf(message, sizeof(message), "간선 수 입력 (500,000 ~ %lld) : ", maxEdge);
+    snprintf(message, sizeof(message), "Enter edge count (500,000 ~ %lld) : ", maxEdge);
     edge = InputData(message, MIN_EDGE, maxEdge);
 
     // hashTag 수 (최대치 제한이 없긴 한데 데이터 생성하는거 보고 유저랑 동일하게 하던가 할거임)
-    hashTag = InputData("해시태그 수 입력 (최소 50,000) : ", MIN_HASHTAG, -1);
+    hashTag = InputData("Enter hashtag count (최소 50,000) : ", MIN_HASHTAG, -1);
 
     // post 수
-    post = InputData("게시물 수 입력 (최소 200,000) : ", MIN_POST, -1);
+    post = InputData("Enter post count (최소 200,000) : ", MIN_POST, -1);
 
     // 파일 임의 변경 확인용 텍스트
     long long check = CheckSum(user, edge, hashTag, post);
 
     printf("================================================\n");
-    printf("               입력된 데이터셋 규모               \n"); 
+    printf("                DATASET SUMMARY                 \n"); 
     printf("================================================\n");
 
     printf("USER : %lld\n", user);
@@ -99,7 +99,7 @@ int main(){
 
     FILE* file = fopen(CONFIG_FILE, "w");
     if (file == NULL){
-        printf("파일 생성 실패 (%s)\n", CONFIG_FILE);
+        printf("Failed to create config file. (%s)\n", CONFIG_FILE);
         return 1;
     }
 
@@ -108,5 +108,8 @@ int main(){
 
     fclose(file);
 
+    printf("================================================\n");
+    printf("               입력된 데이터셋 규모               \n"); 
+    printf("================================================\n");
     return 0;
 }

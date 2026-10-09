@@ -13,7 +13,7 @@ int main(){
     // 파일 열기 (읽기)
     FILE* file = fopen("data/edge.txt", "r");
     if(file == NULL) { // 파일 못 읽어오는거 대비용 예외처리 (어지간해서 그럴일 없을거 같긴 함...)
-        printf("edge.txt 파일 읽기 실패\n");
+        printf("Failed to read edge.txt\n");
         FreeGraph(graph); // 그래프 동적 할당 해제
         return 1; // 프로그램 중단
     }

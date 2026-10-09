@@ -35,9 +35,9 @@ int main(void) {
     configFile = fopen(CONFIG_FILE, "r");
     
     if(configFile == NULL){
-        printf("데이터 규모 설정 파일을 열 수 없습니다.\n");
-        printf("실행 경로 /DataStructureProject/ 에서 실행해주십시오.\n");
-        printf("generatorManager.c를 먼저 실행해주십시오.\n");
+        printf("Failed to open data size configuration file.\n");
+        printf("Please run the program from /DataStructureProject/.\n");
+        printf("Please run generatorManager.c first.\n");
 
         return 1;
     }
@@ -45,26 +45,26 @@ int main(void) {
     // header 크기-1 만큼 header 배열에 configFile의 내용을 저장 (\0찍어야해서 한글자는 제외)
     // 보통 문자열 하나 읽고 그 이상은 안읽음 그리고 읽기 위치 다음줄로 넘김
     if(fgets(header, sizeof(header), configFile) == NULL){
-        printf("데이터 규모 설정 파일을 읽을 수 없습니다.\n");
+        printf("Failed to read data size configuration file.\n");
         fclose(configFile); // 열기는 성공했으니 닫아야함
         return 1;
     }
     // header와 "DATA_STRUCTURE_PROJECT_CONFIG" 문자열 비교함수
     if(strcmp(header, "DATA_STRUCTURE_PROJECT_CONFIG\n") != 0){
-        printf("올바른 파일이 아닙니다.\n"); // 식별 문자열이 다름 => 어 이 파일 아닌갑다
+        printf("Invaild configuration file.\n"); // 식별 문자열이 다름 => 어 이 파일 아닌갑다
         fclose(configFile);
         return 1;
     }
     // fscanf는 전체 파일에서 특정 키워드를 찾는게 아니라 읽고 있는 위치에서 저게 있는지 확인하는 정도임
     // 그래서 위치 섞으면 못읽음 (설마 교수님이 그거까지 섞겠어.. 테스트 시간이 썩어나는게 아니고서야)
     if(fscanf(configFile, "USER=%lld\n", &user) != 1){
-        printf("USER 값을 읽을 수 없습니다.\n");
+        printf("Failed to read USER value.\n");
         fclose(configFile);
         return 1;
     }
     // 아 fscanf도 읽고 나서 다음줄로 읽는 위치 넘겨줌
     if(fscanf(configFile, "EDGE=%lld\n", &edge) != 1){
-        printf("EDGE 값을 읽을 수 없습니다.\n");
+        printf("Failed to read EDGE value.\n");
         fclose(configFile);
         return 1;
     }
@@ -80,12 +80,12 @@ int main(void) {
 
     // 교수님이 임의로 파일 내부 값들 조정했을때 대비용 내부 값이 조건에 맞는지 확인
     if(user < MIN_USER || user > MAX_USER){
-        printf("잘못된 USER 값입니다.\n");
+        printf("Invaild USER value.\n");
         return 1;
     }
     edgeMax = user*(user-1)/2;
     if(edge < MIN_EDGE || edge > edgeMax){
-        printf("잘못된 EDGE 값입니다.\n");
+        printf("Invaild EDGE value.\n");
         return 1;
     }
 
@@ -93,13 +93,13 @@ int main(void) {
 
     Graph* graph = CreateGraph((int)user);
     if(graph == NULL){
-        printf("그래프 생성 실패\n");
+        printf("Failed to create graph\n");
         return 1;
     }
 
     edgeFile = fopen(EDGE_FILE, "w");
     if (edgeFile == NULL){
-        printf("edge.txt 파일 생성 실패\n");
+        printf("Failed to create edge.txt\n");
         FreeGraph(graph); // 그래프는 위에서 생성하고 확인도 했으니 해제해줘야함
         return 1;
     }
@@ -132,9 +132,9 @@ int main(void) {
     fclose(edgeFile);
     FreeGraph(graph); // 중복 확인용 임시 그래프여서 날려도 상관 없음
     
-    printf("간선 데이터 생성 완료\n");
-    printf("유저 수 : %lld\n", user);
-    printf("간선 수 : %lld\n", edge);
+    printf("Edge data generation completed.\n");
+    printf("User count : %lld\n", user);
+    printf("Edge count : %lld\n", edge);
 
     return 0;
 }

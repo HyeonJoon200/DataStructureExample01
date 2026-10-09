@@ -6,7 +6,7 @@ ListNode* CreateListNode(int userID){ // 사실상 연결리스트랑 구조 동
     ListNode* newUser = (ListNode*)malloc(sizeof(ListNode)); // 동적할당
 
     if (newUser == NULL) { // 동적할당 실패시 (설마 실패할까 싶긴한데 암튼)
-        printf("메모리 할당 실패 CreateListNode\n");
+        printf("Failed to allocate memory in CreateListNode\n");
         return NULL;
     }
 
@@ -20,7 +20,7 @@ Graph* CreateGraph(int nodeCount){
     Graph* graph = (Graph*)malloc(sizeof(Graph)); // 동적할당
 
     if (graph == NULL){
-        printf("메모리 할당 실패 CreateGraph\n");
+        printf("Failed to allocate memory in CreateGraph\n");
         return NULL;
     }
 
@@ -29,7 +29,7 @@ Graph* CreateGraph(int nodeCount){
     // 인접리스트 배열 할당
     graph->list = (ListNode**)malloc(sizeof(ListNode*)*(nodeCount+1)); // for문으로 반복해야하나
     if (graph->list == NULL){
-        printf("메모리 할당 실패 CreateGraph List\n");
+        printf("Failed to allocate memory for graph list\n");
         free(graph);
         return NULL;
     }
@@ -69,7 +69,7 @@ void AddEdge(Graph* graph, int user1, int user2){
     if (newUser1 == NULL || newUser2 == NULL){ // 둘 중 하나라도 동적 할당 실패시 둘다 free하고 종료
         free(newUser1);
         free(newUser2);
-        printf("메모리 할당 실패 AddEdge\n");
+        printf("Failed to allocate memory in AddEdge\n");
         return;
     }
 
