@@ -23,7 +23,7 @@ int RandomUserID(int user){
 }
 
 
-int main(void) {
+int GeneratorEdge(void) {
     FILE* configFile; // 데이터 규모 파일 (읽기)
     FILE* edgeFile; // 간선 파일 (쓰기)
 

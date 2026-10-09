@@ -9,7 +9,7 @@
 
 // 간선 생성기꺼 재탕 
 // rand() 두개 써서 한개는 15비트 왼쪽으로 옮기고 나머지 합쳐서 30비트 난수 하나 만들기
-long long RandomID(long long range){
+static long long RandomID(long long range){
     unsigned int random1 = rand() & 0x7FFF;
     unsigned int random2 = rand() & 0x7FFF;
 
@@ -17,7 +17,7 @@ long long RandomID(long long range){
 
     return (long long)(result % (unsigned long long)range);
 }
-int main(){
+int GeneratorHashtag(){
     // 해시태그 목록 (임시로 게임 이름으로 떼움)
     const char* hashTagName[] = {
         "Destiny2",
@@ -109,4 +109,6 @@ int main(){
     free(postID);
 
     printf("%lld hashtag data generated successfully.\n", hashTag);
+
+    return 0;
 }

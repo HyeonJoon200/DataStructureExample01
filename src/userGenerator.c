@@ -2,11 +2,12 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include "generator.h"
 
 #define CONFIG_FILE "data/generatorConfig.txt"
 #define USER_FILE "data/users.txt"
 
-int main(void) {
+int GeneratorUser(void) {
     // 코드 실행 시간 측정용 
     clock_t start = clock();
 

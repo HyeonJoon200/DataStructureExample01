@@ -11,7 +11,7 @@
 #define STATUS_TYPE 3 // 온라인, 오프라인, 취침
 
 // 간선 생성기꺼 재탕
-long long RandomID(long long range){
+static long long RandomID(long long range){
     unsigned int random1 = rand() & 0x7FFF;
     unsigned int random2 = rand() & 0x7FFF;
     unsigned int result = (random1 << 15) | random2;
@@ -19,7 +19,7 @@ long long RandomID(long long range){
     return (long long)(result % (unsigned long long)range);
 }
 
-int main(){
+int GeneratorProfile(){
     const char* region[REGION_TYPE] = {
         "Korea", "Japan", "China", "USA", "Canada", "Germany", "France", "UK"
     };

@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include "generator.h"
 
 #define MIN_USER 100000LL
 #define MAX_USER 100000000LL
@@ -79,10 +80,10 @@ int main(){
     edge = InputData(message, MIN_EDGE, maxEdge);
 
     // hashTag 수 (최대치 제한이 없긴 한데 데이터 생성하는거 보고 유저랑 동일하게 하던가 할거임)
-    hashTag = InputData("Enter hashtag count (최소 50,000) : ", MIN_HASHTAG, -1);
+    hashTag = InputData("Enter hashtag count (Minimum 50,000) : ", MIN_HASHTAG, -1);
 
     // post 수
-    post = InputData("Enter post count (최소 200,000) : ", MIN_POST, -1);
+    post = InputData("Enter post count (Minimum 200,000) : ", MIN_POST, -1);
 
     // 파일 임의 변경 확인용 텍스트
     long long check = CheckSum(user, edge, hashTag, post);
@@ -109,7 +110,35 @@ int main(){
     fclose(file);
 
     printf("================================================\n");
-    printf("               입력된 데이터셋 규모               \n"); 
+    printf("             DATA GENERATION START              \n"); 
     printf("================================================\n");
+    // userGenerator.c
+    if(GeneratorUser() != 0){
+        printf("User generation failed.\n");
+        return 1;
+    }
+    // profileGenerator.c 얘랑 해시태그,게시물은 공유하는 함수가 많아서 나중에 해당 함수는 합칠 예정
+    if(GeneratorProfile() != 0){
+        printf("Profile generation failed.\n");
+        return 1;
+    }
+    
+    // postGenerator.c
+    if(GeneratorPost() != 0){
+        printf("Post generation failed.\n");
+        return 1;
+    }
+    
+    // hashtagGenerator.c
+    if(GeneratorHashtag() != 0){
+        printf("Hashtag generation failed.\n");
+        return 1;
+    }
+    // edgeGenerator.c 얘는 graph.c 에 의존해서 좀 미룸
+    if(GeneratorEdge() != 0){
+        printf("Edge generation failed.\n");
+        return 1;
+    }
+    
     return 0;
 }

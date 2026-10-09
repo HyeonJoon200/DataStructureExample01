@@ -18,7 +18,7 @@ long long RandomID(long long range){
 
 
 // 게시물 작성후 경과 시간 생성기 (데이터 생성할때 시간 기준으로 하면 그게 그거라서 공식쓰기 귀찮아짐)
-long long RandomPassedTime(){
+static long long RandomPassedTime(){
     int a = (int)RandomID(5); // 이름 뭐할까 하다 함수 안이니까 대충 씀
     switch(a){
         case 0:
@@ -39,7 +39,7 @@ long long RandomPassedTime(){
     }
 }
 
-int main(){
+int GeneratorPost(){
     long long user, edge, hashTag, post, check;
 
     FILE* configFile = fopen(CONFIG_FILE, "r");
