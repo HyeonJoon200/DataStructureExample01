@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<time.h>
 #include "generator.h"
 
 #define MIN_USER 100000LL
@@ -64,6 +65,9 @@ int main(){
     long long user, edge, hashTag, profile, post; // 유저, 간선, 해시태그, 프로필, 게시물 
     // edge는 최소 500,000 이상 + (user*(user-1))/2 보다 작아야함 (무방향 그래프라서)
     long long maxEdge;
+
+    // 다른 생성기에 있던 srand() 하나로 통합
+    srand((unsigned int)time(NULL));
 
     printf("================================================\n");
     printf("             DATASET CONFIGURATION              \n"); // 오.. 거의 딱 맞춤
