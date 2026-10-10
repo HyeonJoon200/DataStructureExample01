@@ -1,0 +1,18 @@
+# Build outputs
+compile/
+*.exe
+*.o
+
+# Generator outputs
+data/edge.txt
+data/generatorConfig.txt
+data/hashTags.txt
+data/hashtag.txt
+data/posts.txt
+data/profiles.txt
+data/users.txt
+
+# Editor / OS
+.vscode/
+.DS_Store
+Thumbs.d
