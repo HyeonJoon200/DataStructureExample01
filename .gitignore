@@ -1,9 +1,11 @@
+
 # Build outputs
 compile/
 *.exe
 *.o
 
-# Generator outputs
+
+# Generated outputs
 data/edge.txt
 data/generatorConfig.txt
 data/hashTags.txt
@@ -15,4 +17,5 @@ data/users.txt
 # Editor / OS
 .vscode/
 .DS_Store
-Thumbs.d
+Thumbs.db
+
