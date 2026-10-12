@@ -2,6 +2,8 @@
 #include <stdlib.h> // 동적 할당용
 #include <time.h> // 나중에 코드 실행시간 측정용으로 넣음
 #include "graph.h"
+#include "hashTable.h"
+
 #define NODE 100000 // 나중에 변동 가능하게 할거긴 한데 일단 테스트용으로 유저 수 고정함
 #define EDGE 500000 // 위와 같음
 
@@ -41,6 +43,19 @@ int main(){
         }
         printf("\n");
     } // (9/29)
+    // 10/12 유저 해시테이블 탐색용 임시 코드
+    UserHashTable* table = CreateUserHashTable(10);
+    UserProfile p1 = {1, 25, "Korea", "Game", "Online"};
+    UserProfile p2 = {22, 35, "China", "Music", "Offline"};
+
+    InsertProfile(table, p1);
+    InsertProfile(table, p2);
+
+    UserProfile* result = SearchProfile(table, 22);
+    if(result != NULL){
+        printf("%lld %d %s %s %s\n", result->userID, result->age, result->region, result->interest, result->status);
+    }
+    FreeUserHashTable(table);
     
 
 
