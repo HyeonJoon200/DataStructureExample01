@@ -13,6 +13,9 @@
 #define MIN_EDGE 500000LL
 
 int GeneratorEdge(void) {
+    // 코드 실행 시간 측정용 
+    clock_t start = clock();
+
     FILE* edgeFile; // 간선 파일 (쓰기)
 
     long long edgeMax;
@@ -79,6 +82,14 @@ int GeneratorEdge(void) {
     printf("Edge data generation completed.\n");
     printf("User count : %lld\n", user);
     printf("Edge count : %lld\n", edge);
+
+    // 코드 종료 시간 측정
+    clock_t end = clock();
+
+    // 실행시간 계산
+    double time = (double)(end-start) / CLOCKS_PER_SEC;
+    printf("Execution edge generator time : %f s\n", time);
+    printf("Execution edge generator time : %f ms\n", time * 1000.0);
 
     return 0;
 }

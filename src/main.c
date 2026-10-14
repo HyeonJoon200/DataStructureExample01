@@ -87,7 +87,6 @@ int main(){
     if(scanf("%lld", &searchID) != 1){
         printf("Invaild input.\n");
         FreeUserHashTable(userTable);
-        FreeGraph(graph);
         return 1;
     }
 
@@ -112,9 +111,9 @@ int main(){
         return 1;
     }
 
-    HashTagHashTable* hashTagTable = CreateHashTagHashTable(101);
+    HashTagHashTable* hashTagTable = CreateHashTagHashTable(101); // 버킷 수 : 101개 -> key 수가 11개라 23정도 해도 될지도
 
-    if(hashTagFile == NULL){
+    if(hashTagTable == NULL){
         printf("Failed to create hashtag hash table.\n");
         fclose(hashTagFile);
         return 1;
@@ -163,5 +162,6 @@ int main(){
         }
         printf("\n");
     }
+    FreeHashTagHashTable(hashTagTable);
     return 0;
 }

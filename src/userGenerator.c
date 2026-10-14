@@ -36,8 +36,8 @@ int GeneratorUser(void) {
 
     // 실행시간 계산
     double time = (double)(end-start) / CLOCKS_PER_SEC;
-    printf("Execution time : %f s\n", time);
-    printf("Execution time : %f ms\n", time * 1000.0);
+    printf("Execution user generator time : %f s\n", time);
+    printf("Execution user generator time : %f ms\n", time * 1000.0);
     
     return 0;
 }

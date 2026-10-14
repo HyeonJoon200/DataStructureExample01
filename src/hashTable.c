@@ -140,7 +140,7 @@ int InsertHashTag(HashTagHashTable* table, const char* hashTagName, long long po
 
             // 새 게시물ID 저장함
             newPost->postID = postID;
-            // 기존 postList 맨앞에 postID 노드 삽입 (그래프 인접리스트 그거랑 같은 방식으로 기억함 / 1주일 넘어가니까 상세한건 기억 안남...)
+            // 기존 postList 맨앞에 postID 노드 삽입 (push-front)
             newPost->next = current->postList;
             current->postList = newPost;
 

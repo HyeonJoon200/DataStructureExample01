@@ -35,7 +35,7 @@ int GeneratorProfile(){
 
     // 프로필은 유저수와 동일
     for(long long i = 1; i <= config.user; i++){
-        int age = (int)RandomID(76) + 15; // 15 ~ 100세
+        int age = (int)RandomID(86) + 15; // 15 ~ 100세
         int regionIndex = (int)RandomID(REGION_TYPE);
         int interestIndex = (int)RandomID(INTEREST_TYPE);
         int statusIndex = (int)RandomID(STATUS_TYPE);

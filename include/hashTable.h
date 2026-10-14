@@ -48,7 +48,7 @@ typedef struct {
     HashTagHashNode** bucket;
 }HashTagHashTable;
 
-unsigned int HashHashTag(const char* hashTagName, int tableSize);
+unsigned int HashTag(const char* hashTagName, int tableSize);
 HashTagHashTable* CreateHashTagHashTable(int tableSize);
 int InsertHashTag(HashTagHashTable* table, const char* hashTagName, long long postID);
 HashTagHashNode* SearchHashTag(HashTagHashTable* table, const char* hashTagName);
