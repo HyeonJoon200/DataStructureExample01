@@ -1,9 +1,13 @@
 #include <stdio.h> // 입출력하려면 필수
 #include <stdlib.h> // 동적 할당용
 #include <time.h> // 나중에 코드 실행시간 측정용으로 넣음
+#include <limits.h> // LLONG_MAX 용
+
 #include "graph.h"
 #include "hashTable.h"
 #include "generatorUtil.h"
+#include "dijkstra.h"
+#include "recommend.h"
 
 #define EDGE_FILE "data/edge.txt"
 #define PROFILE_FILE "data/profiles.txt"
@@ -49,6 +53,72 @@ int main(){
         }
         printf("\n");
     } // (9/29)
+    // ============================= 다익스트라 파트 (10/16) ================================
+    // 이거 graph 쓰는거라 FreeGraph 하기전 위치로 끼워넣음
+    int startUser, endUser;
+    printf("Enter start user ID : ");
+    if(scanf("%d", &startUser) != 1){
+        printf("Invaild input.\n");
+        return 1;
+    }
+    printf("Enter end user ID : ");
+    if(scanf("%d", &endUser) != 1){
+        printf("Invaild input");
+        return 1;
+    }
+
+    long long* distance = (long long*)malloc(sizeof(long long) * (graph->userCount + 1));
+    int* prev = (int*)malloc(sizeof(int) * (graph->userCount + 1));
+
+    // distance, prev 배열 생성
+    if(distance == NULL || prev == NULL){
+        printf("Failed to allocate memory.\n");
+        free(distance);
+        free(prev);
+        return 1;
+    }
+
+    // Dijkstra 호출
+    if(Dijkstra(graph, startUser, endUser, distance, prev) != 0){
+        printf("Dijkstra failed or invaild user ID.\n");
+        free(distance);
+        free(prev);
+
+        return 1;
+    }
+
+    // 연결 안된경우 및 목적지 도달 불가 케이스 예외처리
+    if(distance[endUser] == LLONG_MAX){
+        printf("User %d and User %d are not connected.\n", startUser, endUser);
+    }else {
+        printf("Shortest distance : %lld\n", distance[endUser]);
+
+        // path 경로 출력 
+        PrintPath(prev, startUser, endUser, graph->userCount);
+    }
+
+    free(distance);
+    free(prev);
+
+    // =============== 10/16 추천친구(친구의 친구) 목록 출력 및 숫자 카운트 ==============
+    int recommendUser;
+    printf("Enter User ID for friend recommendation : ");
+    if(scanf("%d", &recommendUser) != 1){
+        printf("Invaild input.\n");
+        return 1;
+    }
+
+    int recommendCount = RecommendFriends(graph, recommendUser);
+
+    if(recommendCount < 0){
+        printf("Failed to recommend friends.\n");
+    }else if(recommendCount == 0){
+        printf("No recommanded friends.\n");
+    }else {
+        printf("Recommanded friend count : %d\n", recommendCount);
+    }
+
+    // 10/16
     FreeGraph(graph);
 
     // ================ 10/13 유저 해시테이블 용 코드 =============
@@ -163,5 +233,10 @@ int main(){
         printf("\n");
     }
     FreeHashTagHashTable(hashTagTable);
+
+    
     return 0;
 }
+
+// 컴파일 코드 : gcc -g -O2 src/main.c src/graph.c src/generatorUtil.c src/hashTable.c src/minHeap.c src/dijkstra.c -Iinclude -o compile/main
+// valgrind 코드 : valgrind --leak-check=full --show-leak-kinds=all ./compile/main

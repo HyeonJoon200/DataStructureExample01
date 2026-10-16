@@ -76,7 +76,47 @@ int Dijkstra(Graph* graph, int startUser, int endUser, long long* distance, int*
     return 0;
 }
 
+void PrintPath(int* prev, int startUser, int endUser, int userCount){
+    int pathSize = 0;
+    int* path = (int*)malloc(sizeof(int) * (userCount + 1));
+
+    if(path == NULL){
+        return;
+    }
+
+    int current = endUser;
+
+    while(current != -1){
+        path[pathSize] = current;
+        pathSize++;
+
+        if(current == startUser){
+            break;
+        }
+        
+        current = prev[current];
+    }
+
+    // startUser까지 도달 실패시
+    if(path[pathSize - 1] != startUser){
+        free(path);
+        return;
+    }
+
+    printf("Path : ");
+    
+    for(int i = pathSize - 1; i >= 0; i--){
+        printf("%d", path[i]);
+        if(i != 0){
+            printf(" -> ");
+        }
+    }
+    printf("\n");
+    free(path);
+}
+
 // 다익스트라 테스트용 코드
+/*
 int main(){
     // 테스트 그래프 생성
     Graph* graph = CreateGraph(5);
@@ -136,3 +176,4 @@ int main(){
 
     return 0;
 }
+*/
