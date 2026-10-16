@@ -113,6 +113,7 @@ void FreeMinHeap(MinHeap* heap){
 }
 
 // 다익스트라 구현전 테스트용 임시 main
+/*
 int main(){
     MinHeap* heap = CreateMinHeap(10);
     if(heap==NULL){
@@ -134,3 +135,4 @@ int main(){
 
     return 0;
 }
+*/
