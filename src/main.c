@@ -237,9 +237,52 @@ int main(){
     FreeHashTagHashTable(hashTagTable);
 
     // ===================== 트렌드 피드(10/17) ======================
+    // 게시물 파일 열기
+    FILE* postFile = fopen(POST_FILE, "r"); // postID userID title content createdTime likes
+
+    if(postFile == NULL){
+        printf("Failed to open post file. (%s)\n", POST_FILE);
+        return 1;
+    }
     
+    // 힙 생성
+    MaxHeap* trendHeap = CreateMaxHeap((int)config.post);
+    
+    if(trendHeap == NULL){
+        printf("Failed to create max heap.\n");
+        fclose(postFile);
+        return 1;
+    }
+
+    long long trendPostID, postUserID, createdTime, likes;
+    char title[50], content[50];
+    long long currentTime = (long long)time(NULL);
+
+    while(fscanf(postFile, "%lld %lld %49s %49s %lld %lld", &trendPostID, &postUserID, title, content, &createdTime, &likes) == 6){
+        long long score = CalculateTrendScore(createdTime, likes, currentTime);
+        if(InsertMaxHeap(trendHeap, trendPostID, createdTime, likes, score) != 0){
+            printf("Failed to insert post into max heap.\n");
+            fclose(postFile);
+            FreeMaxHeap(trendHeap);
+            return 1;
+        }
+    }
+    fclose(postFile);
+
+    // top 10 출력 파트
+    for(int i = 1; i <= 10; i++){
+        MaxHeapNode result;
+
+        if(ExtractMax(trendHeap, &result) != 0){
+            break;
+        }
+
+        printf("%d. Post %lld | Score : %lld | Likes : %lld\n", i, result.postID, result.score, result.likes);
+    }
+    FreeMaxHeap(trendHeap);
+
     return 0;
 }
 
-// 컴파일 코드 : gcc -g -O2 src/main.c src/graph.c src/generatorUtil.c src/hashTable.c src/minHeap.c src/dijkstra.c -Iinclude -o compile/main
+// 컴파일 코드 : gcc -g -O2 src/main.c src/graph.c src/generatorUtil.c src/hashTable.c src/minHeap.c src/dijkstra.c src/recommend.c src/maxHeap.c -Iinclude -o compile/main
 // valgrind 코드 : valgrind --leak-check=full --show-leak-kinds=all ./compile/main

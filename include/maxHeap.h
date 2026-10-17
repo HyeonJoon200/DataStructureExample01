@@ -23,6 +23,6 @@ int ExtractMax(MaxHeap* heap, MaxHeapNode* result);
 void SwapMaxHeapNode(MaxHeapNode* a, MaxHeapNode* b);
 void FreeMaxHeap(MaxHeap* heap);
 // 트렌드 피드 점수 계산
-long long CalculateTrendScore(long long createdTime, long long likes, long long currentTime)
+long long CalculateTrendScore(long long createdTime, long long likes, long long currentTime);
 
 #endif // MAX_HEAP_H

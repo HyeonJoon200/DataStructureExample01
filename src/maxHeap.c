@@ -117,6 +117,7 @@ void FreeMaxHeap(MaxHeap* heap){
 }
 long long CalculateTrendScore (long long createdTime, long long likes, long long currentTime){
     long long passedTime = currentTime - createdTime;
+    long long passedHour = passedTime / 3600;
     int weight; // 시간 가중치 (1시간 이내 : x10, 24시간 이내 : x8, 7일 이내 : x6, 30일 이내 : x4, 30일 초과 : x2)
     
     if(passedTime <= 60*60){
@@ -131,5 +132,5 @@ long long CalculateTrendScore (long long createdTime, long long likes, long long
         weight = 2;
     }
 
-    return likes * weight;
+    return likes * weight * 100LL - passedHour;
 }
