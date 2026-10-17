@@ -31,6 +31,10 @@ void SwapMinHeapNode(MinHeapNode* a, MinHeapNode* b){
 }
 
 int InsertMinHeap(MinHeap* heap, int userID, long long distance){
+    if(heap == NULL){
+        return 1;
+    }
+    
     // 힙이 꽉찬경우
     if(heap->size >= heap->capacity){
         return 1; // 실패
@@ -90,7 +94,7 @@ int ExtractMin(MinHeap* heap, MinHeapNode* result){
             smallest = right;
         }
 
-        // 현재 노드가 가장 작은 값 => 힙 조건 충족
+        // 현재 노드가 가장 작은 값 => 최소힙 조건 충족
         if(smallest == index){
             break;
         }

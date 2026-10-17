@@ -3,15 +3,17 @@
 #include <time.h> // 나중에 코드 실행시간 측정용으로 넣음
 #include <limits.h> // LLONG_MAX 용
 
-#include "graph.h"
-#include "hashTable.h"
-#include "generatorUtil.h"
-#include "dijkstra.h"
-#include "recommend.h"
+#include "graph.h" // 그래프 
+#include "hashTable.h" // 해시테이블 -> 유저 프로필(by. userID) or 게시물(by. hashTag) 검색
+#include "generatorUtil.h" // 생성기 중복 함수 제거용
+#include "dijkstra.h" // 다익스트라 (in graph) (with minHeap)
+#include "recommend.h" // 추천친구 (in graph)
+#include "maxHeap.h" // 트렌드 피드 순위 추출용
 
 #define EDGE_FILE "data/edge.txt"
 #define PROFILE_FILE "data/profiles.txt"
 #define HASHTAG_FILE "data/hashTags.txt"
+#define POST_FILE "data/posts.txt"
 
 // 모든 변수명은 camel 표기법으로 작성 (한단어면 그냥 소문자로 고정)
 int main(){
@@ -234,6 +236,7 @@ int main(){
     }
     FreeHashTagHashTable(hashTagTable);
 
+    // ===================== 트렌드 피드(10/17) ======================
     
     return 0;
 }
