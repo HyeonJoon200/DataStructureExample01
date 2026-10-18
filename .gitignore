@@ -1,6 +1,7 @@
 
 # Build outputs
-compile/
+compile/*
+compile/.gitkeep
 *.exe
 *.o
 
