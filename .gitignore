@@ -13,6 +13,8 @@ data/hashtag.txt
 data/posts.txt
 data/profiles.txt
 data/users.txt
+data/*
+!data/.gitkeep
 
 # Editor / OS
 .vscode/
