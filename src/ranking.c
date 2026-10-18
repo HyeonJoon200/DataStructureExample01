@@ -17,15 +17,15 @@ UserRanking* CreateFriendRanking(Graph* graph){
         int friendCount = 0;
         
         // 인접리스트
-        ListNode* current = graph->list[userID];
+        ListNode* current = graph->list[i];
         // 인접리스트 순회
         while(current != NULL){
             friendCount++;
             current = current->next;
         }
-        // rankint[userID-1] 로 한 사유 : 그래프는 1번 부터인데 배열은 0번부터라 한칸씩 땡겨야함
-        ranking[userID-1].userID = userID;
-        ranking[userID-1].friendCount = friendCount;
+        // rankint[i-1] 로 한 사유 : 그래프는 1번 부터인데 배열은 0번부터라 한칸씩 땡겨야함
+        ranking[i-1].userID = i;
+        ranking[i-1].friendCount = friendCount;
     }
     return ranking;
 }
@@ -109,7 +109,7 @@ void PrintTopRanking(UserRanking* ranking){
         return;
     }
 
-    printf("============== FRIEND RANKING TOP 50 ================");
+    printf("\n============== FRIEND RANKING TOP 50 ================\n");
     
     // 순위 50까지 출력
     for(int i=0; i < 50; i++){
