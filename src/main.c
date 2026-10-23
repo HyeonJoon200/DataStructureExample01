@@ -232,7 +232,7 @@ int main(){
 
         switch (menu)
         {
-        case 1: // Search user
+        case 1: {// Search user
             long long searchUserID;
             printf("Enter User ID : ");
             if(scanf("%lld", &searchUserID) != 1){
@@ -255,8 +255,8 @@ int main(){
                 printf("Status  : %s\n", resultProfile->status);
             }
             break;
-        
-        case 2: // Search HashTag
+        }
+        case 2: {// Search HashTag
             char searchHashTag[50];
             printf("Available HashTags : HASHTAG001 ~ HASHTAG100\n");
             printf("Enter HashTag : ");
@@ -282,8 +282,8 @@ int main(){
                 printf("Total Posts : %d\n", countPost);
             }
             break;
-
-        case 3: // Dijkstra
+        }    
+        case 3: {// Dijkstra
             int startUser, endUser;
             printf("Start User ID : ");
             if(scanf("%d", &startUser) != 1){
@@ -322,8 +322,8 @@ int main(){
             free(distance);
             free(prev);
             break;
-
-        case 4: // 추천 친구
+        }    
+        case 4: {// 추천 친구
             int recommendUser;
             printf("Enter User ID :");
             if(scanf("%d", &recommendUser) != 1){
@@ -343,8 +343,8 @@ int main(){
                 printf("Recommended Friend Count : %d\n", recommendCount);
             }
             break;
-
-        case 5: // 트렌드 피드 Top 10 (최대힙)
+        }        
+        case 5: {// 트렌드 피드 Top 10 (최대힙)
             // 트렌드 피드를 실행할때 마다 새로운 최대 힙 생성
             MaxHeap* trendHeap = CreateMaxHeap(postCount);
             if(trendHeap == NULL){
@@ -384,16 +384,16 @@ int main(){
             // 다음 트렌드 피드 실행시 새로운 힙을 생성하므로 현재 힙 해제
             FreeMaxHeap(trendHeap);
             break;
-        
-        case 6: // 친구 수 top 50 출력
+        }
+        case 6: {// 친구 수 top 50 출력
             PrintTopRanking(ranking);
             break;
-        
-        case 7: // 프로그램 종료
+        }
+        case 7: {// 프로그램 종료
             running = 0;
             break;
-            
-        default:
+        }    
+        default: 
             printf("Invaild Menu.\n");
             break;
         }
