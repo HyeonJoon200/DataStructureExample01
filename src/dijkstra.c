@@ -86,7 +86,11 @@ void PrintPath(int* prev, int startUser, int endUser, int userCount){
 
     int current = endUser;
 
-    while(current != -1){
+    while(current != -1 && pathSize < userCount - 1){
+        if(current < 1 || current > userCount){
+            break;
+        }
+        
         path[pathSize] = current;
         pathSize++;
 
@@ -98,7 +102,7 @@ void PrintPath(int* prev, int startUser, int endUser, int userCount){
     }
 
     // startUser까지 도달 실패시
-    if(path[pathSize - 1] != startUser){
+    if(pathSize == 0 || path[pathSize - 1] != startUser){
         free(path);
         return;
     }
@@ -115,65 +119,3 @@ void PrintPath(int* prev, int startUser, int endUser, int userCount){
     free(path);
 }
 
-// 다익스트라 테스트용 코드
-/*
-int main(){
-    // 테스트 그래프 생성
-    Graph* graph = CreateGraph(5);
-    if(graph == NULL){
-        printf("Failed to create graph.\n");
-        return 1;
-    }
-
-    // 테스트용 간선
-    AddEdge(graph, 1, 2);
-    AddEdge(graph, 1, 3);
-    AddEdge(graph, 2, 4);
-    AddEdge(graph, 2, 5);
-    AddEdge(graph, 3, 5);
-
-    // distance 배열, prev 배열
-    long long* distance = (long long*)malloc(sizeof(long long) * 6);
-    int* prev = (int*)malloc(sizeof(int) * 6);
-    if(distance == NULL || prev == NULL){
-        printf("Failed to allocate memory.\n");
-
-        free(distance);
-        free(prev);
-        FreeGraph(graph);
-
-        return 1;
-    }
-    // 1 -> 4 최단 경로 찾기
-    int startUser = 1;
-    int endUser = 4;
-
-    // Dijstra 실행
-    if(Dijkstra(graph, startUser, endUser, distance, prev) != 0){
-        printf("Dijstra failed.\n");
-        free(distance);
-        free(prev);
-        FreeGraph(graph);
-        return 1;
-    }
-
-    // 최단거리 출력
-    if(distance[endUser] == LLONG_MAX){
-        printf("User %d and User %d are not connected", startUser, endUser);
-    } else {
-        printf("Shortest distance from User %d to User %d : %lld\n", startUser, endUser, distance[endUser]);
-    }
-
-    // prev 배열 확인용
-    printf("Previous nodes:\n");
-    for(int i=1; i<=5; i++){
-        printf("User %d : prev = %d, distance = %lld\n", i, prev[i], distance[i]);
-    }
-
-    free(distance);
-    free(prev);
-    FreeGraph(graph);
-
-    return 0;
-}
-*/

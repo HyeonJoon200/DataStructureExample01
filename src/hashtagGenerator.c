@@ -15,12 +15,6 @@ int GeneratorHashtag(){
         return 1;
     }
 
-    // 현재 설계에선 게시물 하나당 해시태그 1개가 최대 
-    if (config.hashTag > config.post){
-        printf("ERROR : hashtag count cannot exceed post count.\n");
-        return 1;
-    }
-
     // 게시물 ID 생성 (postID)
     long long* postID = (long long*)malloc(sizeof(long long) * config.post);
     // 할당 실패

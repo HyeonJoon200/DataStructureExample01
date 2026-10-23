@@ -8,17 +8,12 @@
 
 #define EDGE_FILE "data/edge.txt" // 간선 파일
 
-#define MIN_USER 100000LL
-#define MAX_USER 100000000LL // 최대치 1억으로 잡음 (생성할때 30비트를 기준으로 잡아놔서...)
-#define MIN_EDGE 500000LL
-
 int GeneratorEdge(void) {
     // 코드 실행 시간 측정용 
     clock_t start = clock();
 
     FILE* edgeFile; // 간선 파일 (쓰기)
 
-    long long edgeMax;
     long long generatedEdge = 0; // 생성된 간선 수 측정용
     
     GeneratorConfig config;
@@ -28,17 +23,6 @@ int GeneratorEdge(void) {
 
     long long user = config.user;
     long long edge = config.edge;
-
-    // 교수님이 임의로 파일 내부 값들 조정했을때 대비용 내부 값이 조건에 맞는지 확인
-    if(user < MIN_USER || user > MAX_USER){
-        printf("Invaild USER value.\n");
-        return 1;
-    }
-    edgeMax = user*(user-1)/2;
-    if(edge < MIN_EDGE || edge > edgeMax){
-        printf("Invaild EDGE value.\n");
-        return 1;
-    }
 
     // [그래프 생성 (그 중복간선 확인용) 및 실질적인 데이터 생성 파트]
 

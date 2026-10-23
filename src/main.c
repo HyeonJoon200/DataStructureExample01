@@ -146,13 +146,40 @@ int main(){
     long long trendPostID, postUserID, createdTime, likes;
     char title[50], content[50];
     int postCount = 0;
+    int readResult;
 
-    while(fscanf(postFile, "%lld %lld %49s %49s %lld %lld", &trendPostID, &postUserID, title, content, &createdTime, &likes) == 6){
+    while((readResult = fscanf(postFile, "%lld %lld %49s %49s %lld %lld", &trendPostID, &postUserID, title, content, &createdTime, &likes)) == 6){
+        // 설정 파일에 지정된 게시물 수 초과 검사 + 게시물 작성자 ID 검사
+        if((long long)postCount >= config.post || postUserID < 1 || postUserID > config.user){
+            printf("Post count exceeds configured limit.\n");
+            printf("Invalid post data.\n");
+            
+            fclose(postFile);
+            free(trendPosts);
+            FreeHashTagHashTable(hashTagTable);
+            FreeUserHashTable(userTable);
+            FreeGraph(graph);
+            return 1;
+        }
+
+        
+        
         trendPosts[postCount].postID = trendPostID;
         trendPosts[postCount].createdTime = createdTime;
         trendPosts[postCount].likes = likes;
         trendPosts[postCount].score = 0;
         postCount++;
+    }
+    // 파일 내부 데이터 읽기 실패 + 생성된 게시물 수가 설정 파일 값과 다른경우
+    if(readResult != EOF || ferror(postFile) || (long long)postCount != config.post){
+        printf("Invalid post file format or count.\n");
+
+        fclose(postFile);
+        free(trendPosts);
+        FreeHashTagHashTable(hashTagTable);
+        FreeUserHashTable(userTable);
+        FreeGraph(graph);
+        return 1;
     }
 
     fclose(postFile);
@@ -168,7 +195,16 @@ int main(){
         return 1;
     }
     // 친구 수 기준 내림차순 병합 정렬
-    MergeSortRanking(ranking, 0, graph->userCount - 1);
+    if(MergeSortRanking(ranking, 0, graph->userCount - 1) != 0){
+        printf("Failed to sort friend ranking.\n");
+
+        free(ranking);
+        free(trendPosts);
+        FreeHashTagHashTable(hashTagTable);
+        FreeUserHashTable(userTable);
+        FreeGraph(graph);
+        return 1;
+    }
 
     // ======================= 메뉴 ========================
     int running = 1;

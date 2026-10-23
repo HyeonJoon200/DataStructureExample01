@@ -12,6 +12,10 @@ unsigned int HashUserID(long long userID, int tableSize){
 
 // 테이블 생성
 UserHashTable* CreateUserHashTable(int tableSize){
+    if(tableSize <= 0){
+        return NULL;
+    }
+
     UserHashTable* table = (UserHashTable*)malloc(sizeof(UserHashTable)); // 동적 할당
  
     if(table == NULL){ // 동적할당 실패시 예외처리
@@ -102,6 +106,10 @@ unsigned int HashTag(const char* hashTagName, int tableSize){ // const char* has
 
 // 테이블 생성
 HashTagHashTable* CreateHashTagHashTable(int tableSize){
+    if(tableSize <= 0){
+        return NULL;
+    }
+
     HashTagHashTable* table = (HashTagHashTable*)malloc(sizeof(HashTagHashTable));
 
     if(table==NULL){ // 동적할당 실패시 예외처리

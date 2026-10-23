@@ -31,14 +31,14 @@ UserRanking* CreateFriendRanking(Graph* graph){
 }
 
 // 정렬된 왼쪽 구간과 오른쪽 구간을 하나의 정렬된 구간으로 합치는 함수(여기서도 비교해서 합침)
-void MergeRanking(UserRanking* ranking, int left, int mid, int right){
+int MergeRanking(UserRanking* ranking, int left, int mid, int right){
     // 현재 병합될 전체 구간의 크기
     int size = right - left + 1;
     
     // 병합 결과를 임시 저장할 배열(동적 할당)
     UserRanking* temp = (UserRanking*)malloc(sizeof(UserRanking) * size);
     if(temp == NULL){
-        return;
+        return 1;
     }
 
     int i = left; // i : 왼쪽 배열에서 현재 보고 있는 위치
@@ -80,14 +80,19 @@ void MergeRanking(UserRanking* ranking, int left, int mid, int right){
         ranking[left + index] = temp[index];
     }
     free(temp);
+    return 0;
 }
 
 // Merge Sort를 이용해서 ranking 배열을 정렬
-void MergeSortRanking(UserRanking* ranking, int left, int right){
+int MergeSortRanking(UserRanking* ranking, int left, int right){
+    if(ranking == NULL){
+        return 1;
+    }
+
     // 원소가 하나 -> 이미 정렬됨
     // 시작점과 끝점이 같으면 원소가 하나임
     if(left == right){
-        return;
+        return 0;
     }
 
     // 현재 구간을 절반으로 쪼갬 
@@ -95,12 +100,16 @@ void MergeSortRanking(UserRanking* ranking, int left, int right){
     int mid = (left + right) / 2;
 
     // 왼쪽 절반 정렬(재귀)
-    MergeSortRanking(ranking, left, mid);
+    if(MergeSortRanking(ranking, left, mid) != 0){
+        return 1;
+    }
     // 오른쪽 절반 정렬(재귀)
-    MergeSortRanking(ranking, mid+1, right);
+    if(MergeSortRanking(ranking, mid + 1, right) != 0){
+        return 1;
+    }
 
     // 정렬된 두쪽 합치기
-    MergeRanking(ranking, left, mid, right);
+    return MergeRanking(ranking, left, mid, right);
 }
 
 // 정렬된 랭킹 상위 count명 출력

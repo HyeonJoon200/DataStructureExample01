@@ -4,10 +4,11 @@
 #include "generator.h"
 
 #define MIN_USER 100000LL
-#define MAX_USER 100000000LL
+#define MAX_USER 10000000LL
 #define MIN_EDGE 500000LL
 #define MIN_HASHTAG 50000LL
 #define MIN_POST 200000LL
+#define MAX_EDGE 50000000LL
 
 #define CONFIG_FILE "data/generatorConfig.txt" // 생성할 파일 상대 경로 (괜히 오타낼까봐)
 
@@ -74,10 +75,16 @@ int main(){
     printf("================================================\n");
 
     // user 수
-    user = InputData("Enter user count (100,000 ~ 100,000,000) : ", MIN_USER, MAX_USER);
+    user = InputData("Enter user count (100,000 ~ 10,000,000) : ", MIN_USER, MAX_USER);
 
-    // edge 수 : 무방향 그래프에서 중복 제거한 최대 = user*(user-1)/2
+    // edge 수 : 무방향 그래프에서 중복 제거한 이론상 최대 = user*(user-1)/2
+    // 기본적으로는 평균 수 : 50명으로 잡고 함
     maxEdge = user*(user-1)/2;
+    
+    if(maxEdge > MAX_EDGE){
+        maxEdge = MAX_EDGE;
+    }
+
     char message[100];
     // 문자열 안에 간선 최대치 삽입
     snprintf(message, sizeof(message), "Enter edge count (500,000 ~ %lld) : ", maxEdge);
